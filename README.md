@@ -18,9 +18,9 @@ For a 'real' game there are few things that should or could to be changed:
 - add a feature to re-shuffle the open cards when the user shakes the device
 - icon & launch screen
 
-###How to play
+### How to play
 
-Once you read the basic [rules](https://en.wikipedia.org/wiki/Set_(game)) things are hopefully somewhat obvious, maybe except these:
+Once you read the basic [rules](https://en.wikipedia.org/wiki/Set_(game)) the user interface is hopefully somewhat obvious, maybe except:
 - the Hint button shows only he last of any available matches.
 - the Auto button lets you go through the game without too much effort. The intended use is mostly for debugging.
 - the number labeled 'Δ' is the last score delta, i.e. the latest change to the score.
