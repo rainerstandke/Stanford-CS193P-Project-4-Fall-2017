@@ -7,12 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D549755820A4D7B300F9FFFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549755720A4D7B300F9FFFE /* AppDelegate.swift */; };
-		D549755A20A4D7B300F9FFFE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549755920A4D7B300F9FFFE /* ViewController.swift */; };
 		D549755D20A4D7B300F9FFFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D549755B20A4D7B300F9FFFE /* Main.storyboard */; };
 		D549755F20A4D7B500F9FFFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D549755E20A4D7B500F9FFFE /* Assets.xcassets */; };
 		D549756220A4D7B500F9FFFE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D549756020A4D7B500F9FFFE /* LaunchScreen.storyboard */; };
 		D549756D20A4D7B500F9FFFE /* Stanford_CS193P_Project_4Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549756C20A4D7B500F9FFFE /* Stanford_CS193P_Project_4Tests.swift */; };
+		D549758020A4D92600F9FFFE /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549757720A4D92500F9FFFE /* CardView.swift */; };
+		D549758120A4D92600F9FFFE /* SetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549757820A4D92500F9FFFE /* SetViewController.swift */; };
+		D549758220A4D92600F9FFFE /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549757920A4D92500F9FFFE /* Card.swift */; };
+		D549758420A4D92600F9FFFE /* PileHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549757B20A4D92500F9FFFE /* PileHostingView.swift */; };
+		D549758520A4D92600F9FFFE /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549757C20A4D92500F9FFFE /* GameModel.swift */; };
+		D549758620A4D92600F9FFFE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549757D20A4D92500F9FFFE /* Constants.swift */; };
+		D549758720A4D92600F9FFFE /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549757E20A4D92600F9FFFE /* Grid.swift */; };
+		D549758820A4D92600F9FFFE /* BounceBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549757F20A4D92600F9FFFE /* BounceBehavior.swift */; };
+		D549758A20A4D9B400F9FFFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549758920A4D9B400F9FFFE /* AppDelegate.swift */; };
+		D549758C20A4DA3C00F9FFFE /* GridTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549758B20A4DA3C00F9FFFE /* GridTest.swift */; };
+		D549758D20A4DA6000F9FFFE /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549757E20A4D92600F9FFFE /* Grid.swift */; };
+		D549758F20A4DC4900F9FFFE /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549757920A4D92500F9FFFE /* Card.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,8 +37,6 @@
 
 /* Begin PBXFileReference section */
 		D549755420A4D7B300F9FFFE /* Stanford CS193P Project 4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Stanford CS193P Project 4.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D549755720A4D7B300F9FFFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D549755920A4D7B300F9FFFE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D549755C20A4D7B300F9FFFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D549755E20A4D7B500F9FFFE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D549756120A4D7B500F9FFFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -36,6 +44,16 @@
 		D549756820A4D7B500F9FFFE /* Stanford CS193P Project 4Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Stanford CS193P Project 4Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D549756C20A4D7B500F9FFFE /* Stanford_CS193P_Project_4Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stanford_CS193P_Project_4Tests.swift; sourceTree = "<group>"; };
 		D549756E20A4D7B500F9FFFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D549757720A4D92500F9FFFE /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		D549757820A4D92500F9FFFE /* SetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetViewController.swift; sourceTree = "<group>"; };
+		D549757920A4D92500F9FFFE /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		D549757B20A4D92500F9FFFE /* PileHostingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PileHostingView.swift; sourceTree = "<group>"; };
+		D549757C20A4D92500F9FFFE /* GameModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
+		D549757D20A4D92500F9FFFE /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D549757E20A4D92600F9FFFE /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
+		D549757F20A4D92600F9FFFE /* BounceBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BounceBehavior.swift; sourceTree = "<group>"; };
+		D549758920A4D9B400F9FFFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D549758B20A4DA3C00F9FFFE /* GridTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,8 +95,15 @@
 		D549755620A4D7B300F9FFFE /* Stanford CS193P Project 4 */ = {
 			isa = PBXGroup;
 			children = (
-				D549755720A4D7B300F9FFFE /* AppDelegate.swift */,
-				D549755920A4D7B300F9FFFE /* ViewController.swift */,
+				D549758920A4D9B400F9FFFE /* AppDelegate.swift */,
+				D549757F20A4D92600F9FFFE /* BounceBehavior.swift */,
+				D549757920A4D92500F9FFFE /* Card.swift */,
+				D549757720A4D92500F9FFFE /* CardView.swift */,
+				D549757D20A4D92500F9FFFE /* Constants.swift */,
+				D549757C20A4D92500F9FFFE /* GameModel.swift */,
+				D549757E20A4D92600F9FFFE /* Grid.swift */,
+				D549757B20A4D92500F9FFFE /* PileHostingView.swift */,
+				D549757820A4D92500F9FFFE /* SetViewController.swift */,
 				D549755B20A4D7B300F9FFFE /* Main.storyboard */,
 				D549755E20A4D7B500F9FFFE /* Assets.xcassets */,
 				D549756020A4D7B500F9FFFE /* LaunchScreen.storyboard */,
@@ -92,6 +117,7 @@
 			children = (
 				D549756C20A4D7B500F9FFFE /* Stanford_CS193P_Project_4Tests.swift */,
 				D549756E20A4D7B500F9FFFE /* Info.plist */,
+				D549758B20A4DA3C00F9FFFE /* GridTest.swift */,
 			);
 			path = "Stanford CS193P Project 4Tests";
 			sourceTree = "<group>";
@@ -149,7 +175,6 @@
 					};
 					D549756720A4D7B500F9FFFE = {
 						CreatedOnToolsVersion = 9.3;
-						TestTargetID = D549755320A4D7B300F9FFFE;
 					};
 				};
 			};
@@ -197,8 +222,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D549755A20A4D7B300F9FFFE /* ViewController.swift in Sources */,
-				D549755820A4D7B300F9FFFE /* AppDelegate.swift in Sources */,
+				D549758020A4D92600F9FFFE /* CardView.swift in Sources */,
+				D549758120A4D92600F9FFFE /* SetViewController.swift in Sources */,
+				D549758220A4D92600F9FFFE /* Card.swift in Sources */,
+				D549758A20A4D9B400F9FFFE /* AppDelegate.swift in Sources */,
+				D549758820A4D92600F9FFFE /* BounceBehavior.swift in Sources */,
+				D549758520A4D92600F9FFFE /* GameModel.swift in Sources */,
+				D549758420A4D92600F9FFFE /* PileHostingView.swift in Sources */,
+				D549758620A4D92600F9FFFE /* Constants.swift in Sources */,
+				D549758720A4D92600F9FFFE /* Grid.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,6 +239,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D549756D20A4D7B500F9FFFE /* Stanford_CS193P_Project_4Tests.swift in Sources */,
+				D549758C20A4DA3C00F9FFFE /* GridTest.swift in Sources */,
+				D549758F20A4DC4900F9FFFE /* Card.swift in Sources */,
+				D549758D20A4DA6000F9FFFE /* Grid.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,7 +429,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GBPX9EPXRH;
 				INFOPLIST_FILE = "Stanford CS193P Project 4Tests/Info.plist";
@@ -407,7 +441,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Stanford CS193P Project 4.app/Stanford CS193P Project 4";
 			};
 			name = Debug;
 		};
@@ -415,7 +448,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GBPX9EPXRH;
 				INFOPLIST_FILE = "Stanford CS193P Project 4Tests/Info.plist";
@@ -428,7 +460,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Stanford CS193P Project 4.app/Stanford CS193P Project 4";
 			};
 			name = Release;
 		};
