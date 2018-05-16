@@ -151,10 +151,10 @@ class CardView: UIView {
 		var brite = CGFloat(0)
 		var al = CGFloat(0)
 		fillColor.getHue(&hue, saturation: &sat, brightness: &brite, alpha: &al)
-		let inner = UIColor.init(hue: hue, saturation: sat, brightness: brite * 1.03, alpha: al).cgColor
+		let inner = UIColor.init(hue: hue, saturation: sat, brightness: brite * 1.08, alpha: al).cgColor
 		
 		fillColor.getHue(&hue, saturation: &sat, brightness: &brite, alpha: &al)
-		let outer  = UIColor.init(hue: hue, saturation: sat * 1.1, brightness: brite * 0.985, alpha: al).cgColor
+		let outer  = UIColor.init(hue: hue, saturation: sat * 1.1, brightness: brite * 0.965, alpha: al).cgColor
 		
 		let colors = [inner, outer] as CFArray
 		let endRadius = radius
