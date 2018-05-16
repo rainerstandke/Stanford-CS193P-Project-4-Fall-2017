@@ -1,5 +1,5 @@
 # Stanford-CS193P-Project-4-Fall-2017
-A (partial) solution for programming assignment 4
+### A (partial) solution for programming assignment 4
 
 This project implements the majority of the requirements layed out in Assignment IV: Animated Set of the excellent Stanford iOS Development cource. The course is available for free on [iTunes U](https://itunes.apple.com/us/course/developing-ios-11-apps-with-swift/id1309275316).
 
