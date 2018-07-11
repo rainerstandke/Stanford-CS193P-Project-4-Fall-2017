@@ -19,6 +19,7 @@ class CardView: UIView {
 		super.init(coder: aDecoder)
 	}
 	
+	// not called
 	func commonInit() {
 		self.isOpaque = false
 		self.clearsContextBeforeDrawing = true
@@ -51,6 +52,15 @@ class CardView: UIView {
 	}
 		
 	var stripesPath: UIBezierPath { get { return stripesPathFunc() } }
+	
+	// used to store shadow offset while bounce behavior is active
+	var layerShadowOffsetInterimStore = CGSize.zero
+	var displaylink: CADisplayLink?
+	
+	deinit {
+		displaylink?.invalidate()
+		displaylink = nil
+	}
 	
 	// MARK: - prep
 	
@@ -189,7 +199,7 @@ class CardView: UIView {
 			// path = shape based on self.styleIdx
 			let path = bezierPath()
 			path.apply(transforms[idx - 1])
-			drawingFunc()(path)
+			drawingSymbolFunc()(path)
 		}
 	}
 	
@@ -209,7 +219,7 @@ class CardView: UIView {
 	
 	// MARK: -
 	
-	func drawingFunc() -> (UIBezierPath) -> () {
+	func drawingSymbolFunc() -> (UIBezierPath) -> () {
 		// return a function that takes a path, draws one of the symbols in a style based on self.styleIdx, and returns nothing
 		assert((1...3).contains(self.styleIdx), "styleIdx must be 1...3, got: \(self.styleIdx)")
 		switch styleIdx {
@@ -394,7 +404,7 @@ class CardView: UIView {
 		return path
 	}
 	
-	// MARK: -
+	// MARK: - shadow
 	
 	func fadeInShadow(duration: CFTimeInterval) {
 		let animation = CABasicAnimation(keyPath: "shadowOpacity")
@@ -446,7 +456,65 @@ class CardView: UIView {
 		layer.shadowOpacity = 0
 	}
 	
+	func prepareForShadowRotation() {
+		
+		layerShadowOffsetInterimStore = layer.shadowOffset
+		
+		displaylink = CADisplayLink(target: self,
+									selector: #selector(rotateShadow(sender:)))
+		guard let dLink = displaylink else { return }
+		dLink.add(to: .current,
+				  forMode: .defaultRunLoopMode)
+	}
 	
+	func tearDownShadowRotation() {
+		layer.shadowOffset = layerShadowOffsetInterimStore
+		
+		guard let dLink = displaylink else { return }
+		dLink.invalidate()
+		displaylink = nil
+	}
+	
+	@objc func rotateShadow(sender: CADisplayLink) {
+		
+		// animate the shadowOffset to compensate for rotation
+		
+		let transform = self.layer.affineTransform()
+		
+		// see: https://stackoverflow.com/questions/2051811/iphone-sdk-cgaffinetransform-getting-the-angle-of-rotation-of-an-object
+		var rotationRadian = atan2(transform.b, transform.a)
+		// atan2 returns range π to -π -> convert to range 0 to 2π
+		if rotationRadian < 0 {
+			rotationRadian = (2.0 * .pi) + rotationRadian
+		}
+		
+		// 'scale' the range 0 -> 2π to 0 -> 4
+		// (very linear)
+		let doubleRatio = rotationRadian * 2 / .pi
+		
+		// truncate so that 0 -> 2 occurs for each quarter rotation
+		let truncToTwo = doubleRatio.truncatingRemainder(dividingBy: 2)
+		
+		// if on second of 2 quarter rotations then reflect anything > 1 back to range 0 -> 1
+		// e.g. from: 0 .25 .5 .75 1 1.25 1.5 1.75 2 to: 0 .25 .5 .75 1 .75 .5 .25 0
+		// need to 'cross-mix' w & h offsets according to current rotation
+		// ratio is used to (linearly) 'blend' the baseOffset with the rotation into a new offset size
+		var ratio = truncToTwo
+		if truncToTwo > 1 {
+			ratio = 2 - truncToTwo
+		}
+		
+		let cosin = cos(rotationRadian)
+		let sinus = sin(rotationRadian)
+		let sum = cosin + sinus
+		let diff = cosin - sinus
+		
+		let widthOffest = ((1 - ratio) * layerShadowOffsetInterimStore.width * sum) + (ratio * layerShadowOffsetInterimStore.height * sum)
+		let hightOffset = ((1 - ratio) * layerShadowOffsetInterimStore.height * diff) + (ratio * layerShadowOffsetInterimStore.width * diff)
+		
+		let newOffset = CGSize.init(width: widthOffest, height: hightOffset)
+		layer.shadowOffset = newOffset
+	}
 }
 
 
