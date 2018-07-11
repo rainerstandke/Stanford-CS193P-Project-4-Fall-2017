@@ -23,6 +23,7 @@
 		D549758C20A4DA3C00F9FFFE /* GridTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549758B20A4DA3C00F9FFFE /* GridTest.swift */; };
 		D549758D20A4DA6000F9FFFE /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549757E20A4D92600F9FFFE /* Grid.swift */; };
 		D549758F20A4DC4900F9FFFE /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549757920A4D92500F9FFFE /* Card.swift */; };
+		D5BB720420F6B63500D3F21F /* DynamicAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BB720320F6B63500D3F21F /* DynamicAnimator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		D549757F20A4D92600F9FFFE /* BounceBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BounceBehavior.swift; sourceTree = "<group>"; };
 		D549758920A4D9B400F9FFFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D549758B20A4DA3C00F9FFFE /* GridTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridTest.swift; sourceTree = "<group>"; };
+		D5BB720320F6B63500D3F21F /* DynamicAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicAnimator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				D549757E20A4D92600F9FFFE /* Grid.swift */,
 				D549757B20A4D92500F9FFFE /* PileHostingView.swift */,
 				D549757820A4D92500F9FFFE /* SetViewController.swift */,
+				D5BB720320F6B63500D3F21F /* DynamicAnimator.swift */,
 				D549755B20A4D7B300F9FFFE /* Main.storyboard */,
 				D549755E20A4D7B500F9FFFE /* Assets.xcassets */,
 				D549756020A4D7B500F9FFFE /* LaunchScreen.storyboard */,
@@ -224,6 +227,7 @@
 			files = (
 				D549758020A4D92600F9FFFE /* CardView.swift in Sources */,
 				D549758120A4D92600F9FFFE /* SetViewController.swift in Sources */,
+				D5BB720420F6B63500D3F21F /* DynamicAnimator.swift in Sources */,
 				D549758220A4D92600F9FFFE /* Card.swift in Sources */,
 				D549758A20A4D9B400F9FFFE /* AppDelegate.swift in Sources */,
 				D549758820A4D92600F9FFFE /* BounceBehavior.swift in Sources */,
