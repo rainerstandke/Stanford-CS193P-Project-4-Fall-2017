@@ -271,10 +271,9 @@ class SetViewController: UIViewController {
 				})
 			}
 			staggerInterval += staggerIncrement
-			
-			self.game.dropFromOpenCards(self.matchedCards)
-			self.matchedCards.removeAll()
 		}
+		self.game.dropFromOpenCards(self.matchedCards)
+		self.matchedCards.removeAll()
 	}
 	
 	func moveMatchedCardsUp() {
