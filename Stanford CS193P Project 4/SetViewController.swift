@@ -183,103 +183,115 @@ class SetViewController: UIViewController {
 		// fly out cards that have been matched
 		// removes from cardsView right away, by way of adding to superView (and dropping them at the end)
 		
-		for card in matchedCards {
-			// move cardViews up one level
-			guard let cardView = cardViewDict[card] else { print("no card"); continue }
+		moveMatchedCardsUp()
+
+		var staggerInterval = TimeInterval(0) // w/o delay things can get whacky
+		let staggerIncrement = TimeInterval(0.3)
+		let firstPhaseDuration = TimeInterval(0.5)
+		
+		for (idx, card) in self.matchedCards.enumerated() {
+			guard let cardView = self.cardViewDict[card] else { print("no card"); continue }
 			
-			let newFrame = cardsView.superview!.convert(cardView.frame, from: cardView.superview)
-			cardsView.superview!.addSubview(cardView)
-			cardView.frame = newFrame
-		}
-		DispatchQueue.main.async {
-			var staggerInterval = TimeInterval(0) // w/o delay things can get whacky
-			let staggerIncrement = TimeInterval(0.3)
-			let firstPhaseDuration = TimeInterval(0.5)
-			
-			for (idx, card) in self.matchedCards.enumerated() {
-				guard let cardView = self.cardViewDict[card] else { print("no card"); continue }
+			Timer.scheduledTimer(withTimeInterval: staggerInterval, repeats: false) { _ in
 				
-				Timer.scheduledTimer(withTimeInterval: staggerInterval, repeats: false) { _ in
+				UIView.transition(with: cardView, duration: firstPhaseDuration, options: [.transitionCrossDissolve, .allowAnimatedContent, .allowUserInteraction], animations: {
+					// grow just slightly
+					cardView.frame = cardView.frame.insetBy(dx: -1.25, dy: -2)
 					
-					UIView.transition(with: cardView, duration: firstPhaseDuration, options: [.transitionCrossDissolve, .allowAnimatedContent, .allowUserInteraction], animations: {
-						// grow just slightly
-						cardView.frame = cardView.frame.insetBy(dx: -1.25, dy: -2)
+					// fade out matched
+					cardView.status = .none
+					cardView.setNeedsDisplay()
+					
+					// shadow uses CAAnimation
+					cardView.increaseShadow(duration: firstPhaseDuration)
+				}, completion: { (_) in
+					// start bouncing...
+					self.bounceBehavior.addItem(cardView)
+					
+					// make sure the push starts around the same time for each, despite staggering
+					let delay = (2 * staggerIncrement) - (Double(idx) * staggerIncrement)
+					Timer.scheduledTimer(withTimeInterval: delay, repeats: false) { _ in
+						self.bounceBehavior.push(cardView)
+					}
+					
+					// ... until timer fires
+					Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false, block: { (_) in
+						self.bounceBehavior.removeItem(cardView)
 						
-						// fade out matched
-						cardView.status = .none
-						cardView.setNeedsDisplay()
+						// snap to discard stack
+						// (b/c snap wants to be initialized with the item, it's a one-off)
+						let snapPoint = self.cardsView.superview!.convert(self.discardedStack.center, from: self.discardedStack.superview!)
+						let snapBehavior = UISnapBehavior(item: cardView, snapTo: snapPoint)
+						snapBehavior.damping = 0.1
+						UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.3, delay: 0.0, options: [ .allowUserInteraction, .allowAnimatedContent], animations: {
+							self.animator.addBehavior(snapBehavior) // snaps quickly, rings out longer
+							cardView.fadeOutShadow(duration: 0.3)
+						})
 						
-						// shadow uses CAAnimation
-						cardView.increaseShadow(duration: firstPhaseDuration)
-					}, completion: { (_) in
-						// start bouncing...
-						self.bounceBehavior.addItem(cardView)
-						
-						// make sure the push starts around the same time for each, despite staggering
-						let delay = (2 * staggerIncrement) - (Double(idx) * staggerIncrement)
-						Timer.scheduledTimer(withTimeInterval: delay, repeats: false) { _ in
-							self.bounceBehavior.push(cardView)
-						}
-						
-						// ... until timer fires
-						Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false, block: { (_) in
-							self.bounceBehavior.removeItem(cardView)
+						// b/c there seems to be no way to find when snap is done set timer for next step
+						// NOTE: see branch with too slow/late snap end callback
+						Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { (_) in
+							self.animator.removeBehavior(snapBehavior)
 							
-							// snap to discard stack
-							// (b/c snap wants to be initialized with the item, it's a one-off)
-							let snapPoint = self.cardsView.superview!.convert(self.discardedStack.center, from: self.discardedStack.superview!)
-							let snapBehavior = UISnapBehavior(item: cardView, snapTo: snapPoint)
-							snapBehavior.damping = 0.1
-							UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.3, delay: 0.0, options: [ .allowUserInteraction, .allowAnimatedContent], animations: {
-								self.animator.addBehavior(snapBehavior) // snaps quickly, rings out longer
-								cardView.fadeOutShadow(duration: 0.3)
-								// NOTE: tried to shrink while snapping, but transform seems to be reset at snap conclusion, thus resize did not 'stick'
-							})
-							// b/c there seems to be no way to find when snap is done set timer for next step
-							Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { (_) in
-								self.animator.removeBehavior(snapBehavior)
+							if idx < 2 {
+								// the first 2 cards 'evaporate' after snapping
+								cardView.alpha = 0
+								cardView.removeFromSuperview()
+								return
+							}
+							
+							// trigger fly in, so that the anis overlap
+							self.flyOpenCardsIntoPosition()
+							self.updateDashBoard()
+							
+							UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.6, delay: 0.0, options: [ .allowUserInteraction, .allowAnimatedContent], animations: {
 								
-								if idx < 2 {
-									// the first 2 cards 'evaporate' after snapping
-									cardView.alpha = 0
-									cardView.removeFromSuperview()
-									return
-								}
+								// rotate, move on discard stack
+								cardView.transform = CGAffineTransform.init(rotationAngle: .pi / 2)
+								let newFrame = self.cardsView.superview!.convert(self.discardedStack.frame, from: self.pileHostingView)
+								cardView.frame = newFrame
 								
-								// trigger fly in, so that the anis overlap
-								self.flyOpenCardsIntoPosition()
-								self.updateDashBoard()
-								
-								UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.6, delay: 0.0, options: [ .allowUserInteraction, .allowAnimatedContent], animations: {
-									
-									// rotate, move on discard stack
-									cardView.transform = CGAffineTransform.init(rotationAngle: .pi / 2)
-									let newFrame = self.cardsView.superview!.convert(self.discardedStack.frame, from: self.pileHostingView)
-									cardView.frame = newFrame
-									
-									Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false, block: { (_) in
-										UIView.transition(with: cardView, duration: 0.3, options: [.transitionFlipFromTop, .allowAnimatedContent, .allowUserInteraction], animations: {
-											// flip
-											cardView.isFaceUp = false
-										})
+								Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false, block: { (_) in
+									UIView.transition(with: cardView, duration: 0.3, options: [.transitionFlipFromTop, .allowAnimatedContent, .allowUserInteraction], animations: {
+										// flip
+										cardView.isFaceUp = false
 									})
-								}, completion: { (_) in
-									self.haveDiscarded = true
-									self.discardedStack.isHidden = false
-									cardView.alpha = 0
-									cardView.removeFromSuperview()
 								})
+							}, completion: { (_) in
+								self.haveDiscarded = true
+								self.discardedStack.isHidden = false
+								cardView.alpha = 0
+								cardView.removeFromSuperview()
+								
+								// tidy model:
+								self.cardViewDict.removeValue(forKey: card)
 							})
 						})
 					})
-				}
-				staggerInterval += staggerIncrement
+				})
 			}
+			staggerInterval += staggerIncrement
 			
-			self.matchedCards.forEach { self.cardViewDict.removeValue(forKey: $0) }
 			self.game.dropFromOpenCards(self.matchedCards)
 			self.matchedCards.removeAll()
 		}
+	}
+	
+	func moveMatchedCardsUp() {
+		// cardViews are need to be moved to their super's (= cardsView's) superView to be animated back to the discard stack
+		
+		let snapShot = view.snapshotView(afterScreenUpdates: true)
+		if snapShot != nil { view.addSubview(snapShot!) }
+		
+		matchedCards.forEach { card in
+			// move cardViews up one level - this tends to produce a visible flash/jump
+			guard let cardView = cardViewDict[card] else { print("no card 1"); return }
+			let newFrame = cardsView.superview!.convert(cardView.frame, from: cardView.superview)
+			cardView.frame = newFrame
+			cardsView.superview!.addSubview(cardView)
+		}
+		
+		snapShot?.removeFromSuperview()
 	}
 	
 	// MARK: - card tap
